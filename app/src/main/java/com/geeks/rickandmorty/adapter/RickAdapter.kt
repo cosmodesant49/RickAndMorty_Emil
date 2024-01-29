@@ -11,14 +11,18 @@ import kotlin.reflect.KFunction1
 
 
 class RickAdapter(
-    private val characters: KFunction1<Character, Unit>,
-    private val onClick: List<Character>,
-) :
-    RecyclerView.Adapter<RickAdapter.ViewHolder>() {
+    private val onCharacterClick: (Character) -> Unit
+) : RecyclerView.Adapter<RickAdapter.ViewHolder>() {
+
+    private var characters: List<Character> = emptyList()
+
+    fun setCharacters(characters: List<Character>) {
+        this.characters = characters
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemCharacterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCharacterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -28,16 +32,16 @@ class RickAdapter(
         holder.bind(characters[position])
     }
 
-    inner class ViewHolder(private val binding: ItemCharacterCardBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemCharacterCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character) {
             binding.tvName.text = character.name
             binding.tvStatus.text = character.status
-            Glide.with(binding.ivChar).load(character.image)
-                .into(binding.ivChar)
+            Glide.with(binding.ivChar).load(character.image).into(binding.ivChar)
+
             binding.cardView.setOnClickListener {
-                onClick
+                onCharacterClick(character)
             }
+
             when (character.status) {
                 "Alive" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle_green)
                 "Dead" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle_red)
