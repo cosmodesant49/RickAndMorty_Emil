@@ -12,14 +12,10 @@ import kotlin.reflect.KFunction1
 
 class RickAdapter(
     private val onCharacterClick: (Character) -> Unit
-) : RecyclerView.Adapter<RickAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RickAdapter.ViewHolder>(
+) {
 
     private var characters: List<Character> = emptyList()
-
-    fun setCharacters(characters: List<Character>) {
-        this.characters = characters
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCharacterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -23,9 +23,10 @@ class CharacterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.getCaracters().observe(this) {
-            val adapter = RickAdapter(this::onClickItem, it )
+        viewModel.getCaracters().observe(this) { characters ->
+            val adapter = RickAdapter(this::onClickItem, characters)
             binding.rvRick.adapter = adapter
+            adapter.notifyDataSetChanged()
         }
 
     }
@@ -36,6 +37,4 @@ class CharacterActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-}
 
