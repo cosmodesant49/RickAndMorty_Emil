@@ -4,11 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.geeks.rickandmorty.R
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ItemCharacterCardBinding
+import kotlin.reflect.KFunction1
 
 
-class RickAdapter(private val characters: List<Character>) :
+class RickAdapter(
+    private val characters: KFunction1<Character, Unit>,
+    private val onClick: List<Character>,
+) :
     RecyclerView.Adapter<RickAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +35,14 @@ class RickAdapter(private val characters: List<Character>) :
             binding.tvStatus.text = character.status
             Glide.with(binding.ivChar).load(character.image)
                 .into(binding.ivChar)
+            binding.cardView.setOnClickListener {
+                onClick
+            }
+            when (character.status) {
+                "Alive" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle_green)
+                "Dead" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle_red)
+                "unknown" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle)
+            }
         }
     }
 }

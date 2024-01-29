@@ -1,6 +1,7 @@
 package com.geeks.rickandmorty.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.geeks.rickandmorty.data.api.CartoonApiService
 import com.geeks.rickandmorty.data.model.BaseResponse
@@ -32,5 +33,23 @@ class RMRepository @Inject constructor(private val api: CartoonApiService) {
 
         })
         return characters
+    }
+    fun getCharacter(id: Int): LiveData<Character> {
+        val characterLv = MutableLiveData<Character>()
+        api.getCharacter(id).enqueue(object : Callback<Character> {
+            override fun onResponse(
+                call: Call<Character>,
+                response: Response<Character>
+            ) {
+                response?.body().let {
+                    characterLv.postValue(it)
+                }
+            }
+
+            override fun onFailure(call: Call<Character>, t: Throwable) {
+                Log.e("ololo", t.message.toString())
+            }
+        })
+        return characterLv
     }
 }
