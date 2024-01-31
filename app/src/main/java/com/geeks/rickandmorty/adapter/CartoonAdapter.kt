@@ -7,35 +7,45 @@ import com.bumptech.glide.Glide
 import com.geeks.rickandmorty.R
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ItemCharacterCardBinding
-import kotlin.reflect.KFunction1
 
 
-class RickAdapter(
-    private val onCharacterClick: (Character) -> Unit
-) : RecyclerView.Adapter<RickAdapter.ViewHolder>(
+class CartoonAdapter(
+    private val onCharacterClick: (Int) -> Unit
+) : RecyclerView.Adapter<CartoonAdapter.CharacterViewHolder>(
 ) {
 
-    private var characters: List<Character> = emptyList()
+    private var characters = listOf<Character>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCharacterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
+        val binding =
+            ItemCharacterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CharacterViewHolder(
+            binding,
+            onCharacterClick
+        )
     }
 
     override fun getItemCount(): Int = characters.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         holder.bind(characters[position])
     }
+    fun setCharacters(list: List<Character>){
+        characters = list
+        notifyDataSetChanged()
+    }
 
-    inner class ViewHolder(private val binding: ItemCharacterCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    class CharacterViewHolder(
+        private val binding: ItemCharacterCardBinding,
+        private val onCharacterClick: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character) {
             binding.tvName.text = character.name
             binding.tvStatus.text = character.status
             Glide.with(binding.ivChar).load(character.image).into(binding.ivChar)
 
             binding.cardView.setOnClickListener {
-                onCharacterClick(character)
+                onCharacterClick(character.id)
             }
 
             when (character.status) {

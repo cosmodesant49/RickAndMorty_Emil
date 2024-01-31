@@ -1,4 +1,4 @@
-package com.geeks.rickandmorty.SecondActivity
+package com.geeks.rickandmorty.second_activity
 
 import android.os.Bundle
 import android.util.Log
@@ -23,7 +23,7 @@ class DetailsActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[DetailsViewModel::class.java]
 
-        val id = intent.getIntExtra(CharacterKeys.CHARACTER_ID_ARG, 0)
+        val id = intent.getIntExtra(CHARACTER_ID_ARG, 0)
 
         viewModel.getData(id).observe(this){
             it?.let {
@@ -38,6 +38,10 @@ class DetailsActivity : AppCompatActivity() {
         Log.e("ololo", "Data is not null")
         tvCharacterName.text = it.name
         tvStatus.text = it.status
-        Glide.with(imageCharacter).load(it.image).into(imageCharacter)
+        Glide.with(imageCharacter).load(it.image).circleCrop().into(imageCharacter)
+    }
+
+    companion object{
+        const val CHARACTER_ID_ARG = "characterIdArg"
     }
 }

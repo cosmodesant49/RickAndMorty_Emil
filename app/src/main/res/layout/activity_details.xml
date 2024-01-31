@@ -7,14 +7,13 @@
     android:background="#272B33"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".SecondActivity.DetailsActivity">
+    tools:context=".second_activity.DetailsActivity">
 
     <ImageView
         android:layout_gravity="center"
         android:id="@+id/image_character"
         android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:background="@color/black" />
+        android:layout_height="250dp"/>
 
     <TextView
         android:id="@+id/tv_character_name"
@@ -22,7 +21,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:text="Jerry Smith"
+        android:text="@string/jerry_smith"
         android:layout_marginTop="12dp"
         android:textColor="@color/white"
         android:textSize="28sp"
@@ -35,7 +34,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/circle_status"
             android:layout_width="6dp"
             android:layout_height="6dp"
@@ -49,7 +48,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:text="Alive"
+            android:text="@string/alive2"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -59,7 +58,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:text="  -  "
+            android:text="@string/tire"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -69,7 +68,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:text="Human"
+            android:text="@string/human"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>

@@ -1,4 +1,4 @@
-package com.geeks.rickandmorty.SecondActivity
+package com.geeks.rickandmorty.second_activity
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

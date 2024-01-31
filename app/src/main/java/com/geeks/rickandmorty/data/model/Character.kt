@@ -3,8 +3,11 @@ package com.geeks.rickandmorty.data.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class BaseResponse<T>(
+/*data class BaseResponse<T>(
     var results: List<T>
+) : Serializable*/
+data class CharacterResponse(
+    var results: List<Character>
 ) : Serializable
 
 data class Character(
