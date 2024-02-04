@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.geeks.rickandmorty.R
+import com.geeks.rickandmorty.utils.CharacterStatus
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ItemCharacterCardBinding
+import java.util.Locale
 
 
 class CartoonAdapter(
@@ -48,10 +49,14 @@ class CartoonAdapter(
                 onCharacterClick(character.id)
             }
 
-            when (character.status) {
-                "Alive" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle_green)
-                "Dead" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle_red)
-                "unknown" -> binding.imgCircleStatus.setBackgroundResource(R.drawable.circle)
+
+            when (CharacterStatus.valueOf(character.status.uppercase(Locale.getDefault()))) {
+                CharacterStatus.ALIVE -> binding.imgCircleStatus.setBackgroundResource(
+                    CharacterStatus.ALIVE.drawableResource)
+                CharacterStatus.DEAD -> binding.imgCircleStatus.setBackgroundResource(
+                    CharacterStatus.DEAD.drawableResource)
+                CharacterStatus.UNKNOWN -> binding.imgCircleStatus.setBackgroundResource(
+                    CharacterStatus.UNKNOWN.drawableResource)
             }
         }
     }

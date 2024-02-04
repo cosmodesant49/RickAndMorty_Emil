@@ -16,8 +16,10 @@ data class Character(
     var status: String,
     var image: String,
     var species: String,
+    var gender:String,
     var origin: Origin,
     var location: Location,
+
 ) : Serializable
 
 data class Origin(
@@ -27,3 +29,4 @@ data class Origin(
 data class Location(
     var name: String
 ) : Serializable
+

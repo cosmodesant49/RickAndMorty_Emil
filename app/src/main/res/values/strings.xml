@@ -3,7 +3,12 @@
     <string name="rick_sanchez">Rick Sanchez</string>
     <string name="alive">Alive</string>
     <string name="jerry_smith">Jerry Smith</string>
-    <string name="alive2">Alive</string>
+    <string name="alive2">Alive - </string>
     <string name="tire">-</string>
-    <string name="human">Human</string>
+    <string name="human"> Human</string>
+
+    <string-array name="episode_info">
+        <item>Name</item>
+        <item><font color="#3C3E44">Pilot</font></item>
+    </string-array>
 </resources>
