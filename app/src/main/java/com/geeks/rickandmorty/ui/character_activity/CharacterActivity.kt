@@ -1,15 +1,19 @@
-package com.geeks.rickandmorty.character_activity
+package com.geeks.rickandmorty.ui.character_activity
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.geeks.rickandmorty.second_activity.DetailsActivity
-import com.geeks.rickandmorty.adapter.CartoonAdapter
+import com.geeks.rickandmorty.ui.second_activity.DetailsActivity
+import com.geeks.rickandmorty.ui.adapter.CartoonAdapter
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ActivityMainBinding
 import com.geeks.rickandmorty.keys.CharacterKeys
+import com.geeks.rickandmorty.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,8 +32,23 @@ class CharacterActivity : AppCompatActivity() {
         setContentView(binding.root)
         setpRecycler()
 
-        viewModel.getCaracters().observe(this) { characters ->
-            cartoonAdapter.setCharacters(characters)
+        viewModel.getCaracters().observe(this) { state ->
+            when (state) {
+                is Resource.Error -> {
+                    binding.progressIndicator.isVisible = false
+                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Loading -> {
+                    binding.progressIndicator.isVisible = true
+                }
+
+                is Resource.Success -> {
+                    if (state.data != null)
+                    cartoonAdapter.setCharacters(state.data)
+                    binding.progressIndicator.isVisible = false
+                }
+            }
         }
 
     }
@@ -40,12 +59,12 @@ class CharacterActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
-        adapter=cartoonAdapter
+        adapter = cartoonAdapter
     }
 
     private fun onClickItem(characterId: Int) {
-        startActivity(Intent(this,DetailsActivity::class.java).apply {
-            putExtra(DetailsActivity.CHARACTER_ID_ARG,characterId)
+        startActivity(Intent(this, DetailsActivity::class.java).apply {
+            putExtra(DetailsActivity.CHARACTER_ID_ARG, characterId)
         })
     }
 }

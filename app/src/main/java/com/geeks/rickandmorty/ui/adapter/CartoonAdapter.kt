@@ -1,4 +1,4 @@
-package com.geeks.rickandmorty.adapter
+package com.geeks.rickandmorty.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

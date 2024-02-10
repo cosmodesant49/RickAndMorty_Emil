@@ -1,4 +1,4 @@
-package com.geeks.rickandmorty.second_activity
+package com.geeks.rickandmorty.ui.second_activity
 
 import com.geeks.rickandmorty.R
 import android.os.Bundle
