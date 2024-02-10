@@ -23,6 +23,7 @@
         tools:progress="50"
         tools:visibility="visible"
         android:visibility="gone"
+
         app:indicatorColor="@color/white"/>
 
 
