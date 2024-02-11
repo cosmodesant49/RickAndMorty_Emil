@@ -2,6 +2,8 @@ package com.geeks.rickandmorty.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.geeks.rickandmorty.utils.CharacterStatus
@@ -10,9 +12,10 @@ import com.geeks.rickandmorty.databinding.ItemCharacterCardBinding
 import java.util.Locale
 
 
-class CartoonAdapter(
+class CharacterAdapter(
     private val onCharacterClick: (Int) -> Unit
-) : RecyclerView.Adapter<CartoonAdapter.CharacterViewHolder>(
+) : ListAdapter<Character,CharacterAdapter.CharacterViewHolder>(
+    CharacterDiffCallback()
 ) {
 
     private var characters = listOf<Character>()
@@ -26,14 +29,8 @@ class CartoonAdapter(
         )
     }
 
-    override fun getItemCount(): Int = characters.size
-
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(characters[position])
-    }
-    fun setCharacters(list: List<Character>){
-        characters = list
-        notifyDataSetChanged()
+        holder.bind(getItem(position))
     }
 
     class CharacterViewHolder(
@@ -60,4 +57,11 @@ class CartoonAdapter(
             }
         }
     }
+}
+class CharacterDiffCallback : DiffUtil.ItemCallback<Character>() {
+    override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean =
+        oldItem == newItem
 }

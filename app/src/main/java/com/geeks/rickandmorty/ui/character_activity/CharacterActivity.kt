@@ -9,10 +9,10 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geeks.rickandmorty.ui.second_activity.DetailsActivity
-import com.geeks.rickandmorty.ui.adapter.CartoonAdapter
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ActivityMainBinding
 import com.geeks.rickandmorty.keys.CharacterKeys
+import com.geeks.rickandmorty.ui.adapter.CharacterAdapter
 import com.geeks.rickandmorty.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +23,7 @@ class CharacterActivity : AppCompatActivity() {
         ViewModelProvider(this)[CharacterViewModel::class.java]
     }
     private val cartoonAdapter =
-        CartoonAdapter(this::onClickItem)
+        CharacterAdapter(this::onClickItem)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class CharacterActivity : AppCompatActivity() {
 
                 is Resource.Success -> {
                     if (state.data != null)
-                    cartoonAdapter.setCharacters(state.data)
+                    cartoonAdapter.submitList(state.data)
                     binding.progressIndicator.isVisible = false
                 }
             }
