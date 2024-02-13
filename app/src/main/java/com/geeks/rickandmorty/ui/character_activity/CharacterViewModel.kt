@@ -8,8 +8,7 @@ import com.geeks.rickandmorty.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class CharacterViewModel @Inject constructor(private val repository: RMRepository) : ViewModel() {
+class CharacterViewModel (private val repository: RMRepository) : ViewModel() {
 
     fun getCaracters(): LiveData<Resource<List<Character>>>{
         return repository.getCharacters()

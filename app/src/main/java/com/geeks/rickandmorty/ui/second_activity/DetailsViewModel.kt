@@ -8,8 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 
-@HiltViewModel
-class DetailsViewModel @Inject constructor(private val repository: RMRepository) : ViewModel() {
+class DetailsViewModel (private val repository: RMRepository) : ViewModel() {
 
     fun getData(id: Int): LiveData<Character> {
         return repository.getCharacter(id)

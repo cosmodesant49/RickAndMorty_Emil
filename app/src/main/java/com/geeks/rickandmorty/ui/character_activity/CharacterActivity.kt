@@ -15,13 +15,11 @@ import com.geeks.rickandmorty.keys.CharacterKeys
 import com.geeks.rickandmorty.ui.adapter.CharacterAdapter
 import com.geeks.rickandmorty.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class CharacterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by lazy {
-        ViewModelProvider(this)[CharacterViewModel::class.java]
-    }
+    private val viewModel by viewModel<CharacterViewModel>()
     private val cartoonAdapter =
         CharacterAdapter(this::onClickItem)
 

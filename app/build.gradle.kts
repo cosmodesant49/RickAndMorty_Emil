@@ -75,5 +75,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpClientVersion")
     //GLide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    //Koin
+    implementation ("io.insert-koin:koin-android:3.5.0")
 
 }

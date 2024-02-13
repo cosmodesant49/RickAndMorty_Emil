@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class RMRepository @Inject constructor(private val api: CartoonApiService) {
+class RMRepository (private val api: CartoonApiService) {
     fun getCharacters(): MutableLiveData<Resource<List<Character>>> {
         val characters = MutableLiveData<Resource<List<Character>>>()
         characters.postValue((Resource.Loading()))
