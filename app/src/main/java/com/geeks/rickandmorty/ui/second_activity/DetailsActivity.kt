@@ -10,13 +10,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.geeks.rickandmorty.data.base.BaseActivity
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ActivityDetailsBinding
 import com.geeks.rickandmorty.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
     private val viewModel: DetailsViewModel by viewModel()
@@ -28,18 +29,14 @@ class DetailsActivity : AppCompatActivity() {
 
         val id = intent.getIntExtra(CHARACTER_ID_ARG, 0)
 
-        viewModel.getData(id).observe(this) { state ->
-            when (state) {
-                is Resource.Error -> {
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    if (state.data != null)
-                        setCharacterData(state.data)
-                }
+        viewModel.getData(id).stateObserver(
+            success = {
+                setCharacterData(it)
+            },
+            state = {
+                binding.progressIndicator.isVisible = it is Resource.Loading
             }
-        }
+        )
     }
 
     private fun setCharacterData(it: Character) = with(binding) {

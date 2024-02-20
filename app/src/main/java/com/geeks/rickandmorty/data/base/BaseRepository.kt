@@ -11,16 +11,16 @@ import java.io.IOException
 
 abstract class BaseRepository {
     protected fun <T> doRequest(
-        request:suspend () -> T
-        ): LiveData<Resource<T>> = liveData(Dispatchers.IO){
-            emit(Resource.Loading())
-            try {
-                val response = request()
-                //if (response.isSuccessful && response.body() != null && response.code() in 200..300){
-                    emit(Resource.Success(response))
-                //}
-            }catch (io: IOException){ 
-                emit(Resource.Error(io.message?:"Unknown Error!"))
+        request: suspend () -> Response<T>
+    ): LiveData<Resource<T>> = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            val response = request.invoke()
+            if (response.isSuccessful && response.body() != null && response.code() in 200..300){
+            emit(Resource.Success(response.body()!!))
+            }
+        } catch (io: IOException) {
+            emit(Resource.Error(io.message ?: "Unknown Error!"))
 
         }
     }
