@@ -11,8 +11,8 @@ import retrofit2.http.Query
 interface CartoonApiService {
     @GET("character")
     //fun getCharacters(): Call<BaseResponse<Character>>
-    fun getCharacters(): Call<CharacterResponse>
+    suspend fun getCharacters(): CharacterResponse
 
     @GET("character/{id}")
-    fun getCharacter(@Path("id") id: Int):Call<Character>
+    suspend fun getCharacter(@Path("id") id: Int):Response<Character>
 }

@@ -30,21 +30,16 @@ class CharacterActivity : AppCompatActivity() {
         setContentView(binding.root)
         setpRecycler()
 
-        viewModel.getCaracters().observe(this) { state ->
+        viewModel.charactersLv.observe(this) { state ->
+            binding.progressIndicator.isVisible = state is Resource.Loading
             when (state) {
                 is Resource.Error -> {
-                    binding.progressIndicator.isVisible = false
                     Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
                 }
-
-                is Resource.Loading -> {
-                    binding.progressIndicator.isVisible = true
-                }
-
+                is Resource.Loading -> {}
                 is Resource.Success -> {
                     if (state.data != null)
                     cartoonAdapter.submitList(state.data)
-                    binding.progressIndicator.isVisible = false
                 }
             }
         }

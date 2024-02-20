@@ -1,7 +1,7 @@
 package com.geeks.rickandmorty.di
 
 import com.geeks.rickandmorty.BuildConfig
-import com.geeks.rickandmorty.data.RMRepository
+import com.geeks.rickandmorty.data.repository.RMRepository
 import com.geeks.rickandmorty.data.api.CartoonApiService
 import com.geeks.rickandmorty.ui.character_activity.CharacterViewModel
 import com.geeks.rickandmorty.ui.second_activity.DetailsViewModel

@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.geeks.rickandmorty.data.model.Character
 import com.geeks.rickandmorty.databinding.ActivityDetailsBinding
+import com.geeks.rickandmorty.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,11 +28,17 @@ class DetailsActivity : AppCompatActivity() {
 
         val id = intent.getIntExtra(CHARACTER_ID_ARG, 0)
 
-        viewModel.getData(id).observe(this) {
-            it?.let {
-                setCharacterData(it)
+        viewModel.getData(id).observe(this) { state ->
+            when (state) {
+                is Resource.Error -> {
+                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    if (state.data != null)
+                        setCharacterData(state.data)
+                }
             }
-
         }
     }
 
